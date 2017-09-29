@@ -1,0 +1,128 @@
+<!--
+ Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+  <h4> <strong> Hymns <strong> </h4>
+
+  <div>
+     <table id="table" summary="Department List" aria-label="Departments Table"
+         data-bind="ojComponent: {component: 'ojTable',
+                                 data: datasource,
+                                 columnsDefault: {sortable: 'none'},
+                                 columns: [
+                                           {headerText: 'Name',field: 'name'},
+                                           {headerText: 'Author',field: 'author'},
+                                           {headerText: 'Song Sheet',template: 'sheet_column'},
+                                           {headerText: 'Song Link',template:'music_column'} ,
+                                           {headerText: 'Pattern',field: 'pattern'} ,
+                                           {headerTemplate: 'addhdr',template: 'edit_delete_column'}
+                                          ]}">
+     </table>
+     <div id="paging" data-bind="ojComponent: {component:'ojPagingControl',data:datasource, pageSize:7}">
+     </div>
+
+  </div>
+    <!-- Header Add Button -->
+    <script type="text/html" id="addhdr">
+       <th style="padding-left: 5px; padding-right: 5px;">
+         <button data-bind="ojComponent: {component: 'ojButton', label: 'Add',display:'icons' ,icons:{start:'create_new'}},
+                          click:$parent.addAction"></button>
+       </th>
+    </script>
+    <!--  Delete Edit Button -->
+    <script type="text/html" id="edit_delete_column">
+        <td>
+          <button data-bind="ojComponent: {component: 'ojButton', label: 'Edit' ,display:'icons' ,icons:{start:'new-icon_12 edit_new'}},
+                           click:$parent.editAction", rootAttributes: {class: 'oj-button-sm'}></button>
+           <button data-bind="ojComponent: {component: 'ojButton', label: 'Delete',display:'icons' ,icons:{start:'new-icon_12 delete_new'}},
+                                            click:$parent.deleteAction", rootAttributes: {class: 'oj-button-sm'}>
+           </button>
+        </td>
+    </script>
+    <!--  Song Sheet Button -->
+    <script type="text/html" id="sheet_column">
+        <td>
+          <a  target="_blank" data-bind="attr:{ href: (songsheet)? songsheet:'' , hidden:!(songsheet)}"> <img src="css/images/hymn.png" width="18px" height="18px">
+          </a>
+        </td>
+    </script>
+    <!--  Music Button -->
+    <script type="text/html" id="music_column">
+        <td>
+          <a  target="_blank" data-bind="attr:{ href: (song)? song:'', hidden:!(song)}"> <img src="css/images/speaker.png" width="18px" height="18px">
+          </a>
+        </td>
+    </script>
+</div>
+
+
+
+
+<div id="editDialog" title="Manage Hymn" data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide',
+                                                       resizeBehavior: 'resizable', dragAffordance: 'title-bar',
+                                                       modality: 'modal',rootAttributes:{style:'width:860px;height:400px;'}
+                                                    }">
+
+    <form class="oj-form oj-form-layout" data-bind="submit:saveAction">
+        <div class="oj-dialog-header oj-helper-clearfix" aria-labelledby="dialog-title-id">
+            <div>
+                <span id="infoIcon" class="oj-message-status-icon hymn_icon" style="float:left; margin-right: 10px"></span>
+                <span id="dialog-title-id" class="oj-dialog-title">Manage Hymn</span>
+            </div>
+        </div>
+
+        <div class="oj-dialog-body">
+          <div class="oj-form oj-md-labels-inline oj-form-cols-labels-inline oj-form-cols-max2">
+               <div class="oj-flex">
+                 <div class="oj-flex-item">
+                   <label for="idname">Name</label>
+                 </div>
+                 <div class="oj-flex-item">
+                   <input id="idname" data-bind="ojComponent: {component: 'ojInputText',value:name, required: true}">
+                 </div>
+               </div>
+               <div class="oj-flex">
+                 <div class="oj-flex-item">
+                      <label for="idauthor">Author</label>
+                 </div>
+                 <div class="oj-flex-item">
+                    <input id="idauthor" data-bind="ojComponent: {component: 'ojInputText',value:author}">
+                 </div>
+              </div>
+              <div class="oj-flex">
+                <div class="oj-flex-item">
+                     <label for="idsongsheet">Song Sheet</label>
+                </div>
+                <div class="oj-flex-item">
+                   <input id="idsongsheet" data-bind="ojComponent: {component: 'ojInputText',value:songsheet}">
+                </div>
+             </div>
+             <div class="oj-flex">
+               <div class="oj-flex-item">
+                    <label for="idsong">Song Link</label>
+               </div>
+               <div class="oj-flex-item">
+                  <input id="idsong" data-bind="ojComponent: {component: 'ojInputText',value:song}">
+               </div>
+            </div>
+
+            <div class="oj-flex">
+              <div class="oj-flex-item">
+                   <label for="idpattern">Pattern</label>
+              </div>
+              <div class="oj-flex-item">
+                 <input id="idpattern" data-bind="ojComponent: {component: 'ojInputText',value:pattern}">
+              </div>
+           </div>
+
+          </div>
+        </div>
+
+
+        <div class="oj-dialog-footer">
+            <button id="submitBtn" type="submit" data-bind="ojComponent:{component:'ojButton', label: 'Save',display:'icons',icons:{start:'new-icon_12 save_icon'} } , enable:validPage()" ></button>
+            <button id="resetBtn"  data-bind="ojComponent: {component:'ojButton', label:'Cancel', display:'icons' ,icons:{start:'new-icon_12 undo_icon'}}, click: function(){$('#editDialog').ojDialog('close');}"></button>
+        </div>
+    </form>
+</div>

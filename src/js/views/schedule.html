@@ -1,0 +1,173 @@
+<!--
+ Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+  <h4> <strong>Schedule<strong> </h4>
+
+  <div>
+     <table id="table" summary="Department List" aria-label="Departments Table"
+         data-bind="ojComponent: {component: 'ojTable',
+                                 data: datasource,
+                                 columnsDefault: {sortable: 'all'},
+                                 columns: [
+                                           {headerText: 'Name',field: 'name'},
+                                           {headerText: 'Date',field: 'date'},
+                                           {headerText: 'Enterance',template: 'enterance_column'},
+                                           {headerText: 'Offertory',template: 'offer_column'},
+                                           {headerText: 'Communion',template: 'commu_column'},
+                                           {headerText: 'Sending Forth',template:'send_column'} ,
+                                           {headerTemplate: 'addhdr',template: 'edit_delete_column'}
+                                          ]}">
+     </table>
+     <div id="paging" data-bind="ojComponent: {component:'ojPagingControl',data:datasource, pageSize:7}">
+     </div>
+
+  </div>
+    <!-- Header Add Button -->
+    <script type="text/html" id="addhdr">
+       <th style="padding-left: 1px; padding-right: 1px;">
+         <button data-bind="ojComponent: {component: 'ojButton', label: 'Add',chroming: 'full', icons:{start:'create_new'}},
+                          click:$parent.addAction"></button>
+       </th>
+    </script>
+    <!--  Delete Edit Button -->
+    <script type="text/html" id="edit_delete_column">
+        <td>
+          <button data-bind="ojComponent: {component: 'ojButton', label: 'Edit' ,display:'icons' ,icons:{start:'new-icon_12 edit_new'}},
+                           click:$parent.editAction", rootAttributes: {class: 'oj-button-sm'}></button>
+           <button data-bind="ojComponent: {component: 'ojButton', label: 'Delete',display:'icons' ,icons:{start:'new-icon_12 delete_new'}},
+                                            click:$parent.deleteAction", rootAttributes: {class: 'oj-button-sm'}>
+           <button data-bind="ojComponent: {component: 'ojButton', label: 'Mail',display:'icons' ,icons:{start:'new-icon_12 mail_icon'}},
+                                           click:$parent.deleteAction", rootAttributes: {class: 'oj-button-sm'}>
+
+           </button>
+        </td>
+    </script>
+    <script type="text/html" id="enterance_column">
+        <td>
+          <input id="ident"  placeholder="Search..."  data-bind="ojComponent: {
+          component: 'ojInputSearch',value: enterance, options:$parent.hymnArray, optionsKeys:{value:'_id',label:'name'}, disabled:true,  rootAttributes: {style:'max-width: 20em'}}">
+        </td>
+    </script>
+    <script type="text/html" id="offer_column">
+        <td>
+          <input id="ident"  placeholder="Search..."  data-bind="ojComponent: {
+          component: 'ojInputSearch',value: offertory, options:$parent.hymnArray, optionsKeys:{value:'_id',label:'name'}, disabled:true,  rootAttributes: {style:'max-width: 20em'}}">
+        </td>
+    </script>
+    <script type="text/html" id="commu_column">
+        <td>
+          <input id="ident"  placeholder="Search..."  data-bind="ojComponent: {
+          component: 'ojInputSearch',value:communion, options:$parent.hymnArray, optionsKeys:{value:'_id',label:'name'}, disabled:true,  rootAttributes: {style:'max-width: 20em'}}">
+        </td>
+    </script>
+    <script type="text/html" id="send_column">
+        <td>
+          <input id="ident"  placeholder="Search..."  data-bind="ojComponent: {
+          component: 'ojInputSearch',value:sending, options:$parent.hymnArray, optionsKeys:{value:'_id',label:'name'}, disabled:true,  rootAttributes: {style:'max-width: 20em'}}">
+        </td>
+    </script>
+
+
+</div>
+
+
+
+
+
+
+<div id="editDialog" title="Manage Shedule" data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide',
+                                                       resizeBehavior: 'resizable', dragAffordance: 'title-bar',
+                                                       modality: 'modal',rootAttributes:{style:'width:860px;height:400px;'}
+                                                    }">
+
+    <form class="oj-form oj-form-layout" data-bind="submit:saveAction">
+        <div class="oj-dialog-header oj-helper-clearfix" aria-labelledby="dialog-title-id">
+            <div>
+                <span id="infoIcon" class="oj-message-status-icon schedule_icon" style="float:left; margin-right: 10px"></span>
+                <span id="dialog-title-id" class="oj-dialog-title">Manage Shedule</span>
+            </div>
+        </div>
+
+        <div class="oj-dialog-body">
+          <div class="oj-form oj-md-labels-inline oj-form-cols-labels-inline oj-form-cols-max2">
+               <div class="oj-flex">
+                 <div class="oj-flex-item">
+                   <label for="idname">Name</label>
+                 </div>
+                 <div class="oj-flex-item">
+                   <input id="idname" data-bind="ojComponent: {component: 'ojInputText',value:name, required: true}">
+                 </div>
+               </div>
+               <div class="oj-flex">
+                 <div class="oj-flex-item">
+                      <label for="idate">Date</label>
+                 </div>
+                 <div class="oj-flex-item">
+                    <input id="idate" data-bind="ojComponent: {component: 'ojInputDate',value:date , required: true}">
+                 </div>
+              </div>
+              <div class="oj-flex">
+                <div class="oj-flex-item">
+                     <label for="identerance">Enterance</label>
+                </div>
+                <div class="oj-flex-item">
+                  <input id="identerance"  placeholder="Search..."  data-bind="ojComponent:{component: 'ojInputSearch',value: enterance, options:hymnArray, optionsKeys:{value:'_id',label:'name'}, rootAttributes: {style:'max-width: 20em'}}">
+                </div>
+             </div>
+             <div class="oj-flex">
+               <div class="oj-flex-item">
+                    <label for="idoff">Offertory</label>
+               </div>
+               <div class="oj-flex-item">
+                 <input id="idoff" placeholder="Search..."  data-bind="ojComponent: {component: 'ojInputSearch',value: offertory, options:hymnArray, optionsKeys:{value:'_id',label:'name'}, rootAttributes: {style:'max-width: 20em'}}">
+               </div>
+            </div>
+
+            <div class="oj-flex">
+              <div class="oj-flex-item">
+                   <label for="idcomm">Communion</label>
+              </div>
+              <div class="oj-flex-item">
+                <input id="idcomm" placeholder="Search..."  data-bind="ojComponent: {component: 'ojInputSearch',value:communion, options:hymnArray, optionsKeys:{value:'_id',label:'name'}, rootAttributes: {style:'max-width: 20em'}}">
+              </div>
+           </div>
+
+           <div class="oj-flex">
+             <div class="oj-flex-item">
+                  <label for="idsend">Sending off</label>
+             </div>
+             <div class="oj-flex-item">
+               <input id="idsend" placeholder="Search..."  data-bind="ojComponent: {component: 'ojInputSearch',value:sending, options:hymnArray, optionsKeys:{value:'_id',label:'name'}, rootAttributes: {style:'max-width: 20em'}}">
+             </div>
+          </div>
+
+           <div class="oj-flex">
+             <div class="oj-flex-item">
+                  <label for="idresp">Responsorial</label>
+             </div>
+             <div class="oj-flex-item">
+                <input id="idresp" data-bind="ojComponent: {component: 'ojInputText',value:responsorial }">
+             </div>
+          </div>
+
+          <div class="oj-flex">
+            <div class="oj-flex-item">
+                 <label for="idchoir">Choir</label>
+            </div>
+            <div class="oj-flex-item">
+              <input id="idchoir" placeholder="Search..."  data-bind="ojComponent: {component: 'ojInputSearch',value:choir, options:choirArray, optionsKeys:{value:'_id',label:'name'}, rootAttributes: {style:'max-width: 20em'}}">
+            </div>
+         </div>
+
+          </div>
+        </div>
+
+
+        <div class="oj-dialog-footer">
+            <button id="submitBtn" type="submit" data-bind="ojComponent:{component:'ojButton', label: 'Save',display:'icons',icons:{start:'new-icon_12 save_icon'} } , enable:validPage()" ></button>
+            <button id="resetBtn"  data-bind="ojComponent: {component:'ojButton', label:'Cancel', display:'icons' ,icons:{start:'new-icon_12 undo_icon'}}, click: function(){$('#editDialog').ojDialog('close');}"></button>
+        </div>
+    </form>
+</div>

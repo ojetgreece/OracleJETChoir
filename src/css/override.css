@@ -1,0 +1,53 @@
+.new-icon
+{
+  height:20px;
+  width:20px;
+  {
+  }
+.new-icon_12
+  he
+  ight:12px;
+  width:12px;
+  font-family:AppFont;
+  font-size:12px;
+  line-height:0.5;
+  display:inline-block;
+  font-weight:normal;
+  font-style:normal;
+  font-variant:normal;
+  text-align:center;
+  box-sizing:content-box;
+}
+
+.create_new:before {
+  content: url("images/newb.png");
+}
+.edit_new:before {
+  content: url("images/edit.png");
+}
+.delete_new:before {
+  content: url("images/delete.png");
+}
+.choir_icon:before {
+  content: url("images/choir.png");
+}
+
+.member_icon:before {
+  content: url("images/member.png");
+}
+
+.save_icon:before {
+  content: url("images/save.png");
+}
+.undo_icon:before {
+  content: url("images/Restart.png");
+}
+.schedule_icon:before {
+  content: url("images/schedule.png");
+}
+.hymn_icon:before {
+  content: url("images/hymn.png");
+}
+.mail_icon:before {
+  content: url("images/mail.png");
+}

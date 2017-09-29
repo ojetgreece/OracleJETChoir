@@ -1,0 +1,164 @@
+<!--
+ Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+"phone":"","dob":"","admin":"","active":"true","trait":"","choir":"58deed91734d1d01a239853a","resp":"","demo":false
+ -->
+<div class="oj-hybrid-padding">
+  <h4> <strong> Choir Members </strong></h4>
+  <div>
+     <table id="table" summary="Department List" aria-label="Departments Table"
+         data-bind="ojComponent: {component: 'ojTable',
+                                 data: datasource,
+                                 columnsDefault: {sortable: 'none'},
+                                 columns: [
+                                           {headerText: 'First Name',field: 'fname'},
+                                           {headerText: 'Last Name',field: 'lname'},
+                                           {headerText: 'eMail',field: 'email'},
+                                           {headerText: 'Phone',field: 'phone'} ,
+                                           {headerText: 'Birth Date',field: 'dob'} ,
+                                           {headerText: 'Admin',template: 'checkBox_admin'} ,
+                                           {headerText: 'Active',template: 'checkBox_active'} ,
+                                           {headerTemplate: 'addhdr',template: 'edit_delete_column'}
+                                          ]}">
+     </table>
+  </div>
+</div>
+
+
+
+<script type="text/html" id="addhdr">
+   <th style="padding-left: 5px; padding-right: 5px;">
+     <button data-bind="ojComponent: {component: 'ojButton', label: 'Add',display:'icons' ,icons:{start:'create_new'}},
+                      click:$parent.addAction"></button>
+   </th>
+</script>
+
+
+<script type="text/html" id="edit_delete_column">
+    <td>
+      <button data-bind="ojComponent:{component:'ojButton',label:'Edit',display:'icons' ,icons:{start:'new-icon_12 edit_new'}},click:$parent.editAction, rootAttributes:{class:'oj-button-sm'}"></button>
+      <button data-bind="ojComponent:{component:'ojButton',label:'Delete',display:'icons' ,icons:{start:'new-icon_12 delete_new'}},click:$parent.deleteAction, rootAttributes:{class:'oj-button-sm'}"></button>
+    </td>
+</script>
+
+<script type="text/html" id="checkBox_admin">
+      <td> <input id="idadmin" disabled data-bind="ojComponent: {component: 'ojSwitch',value:admin} "> </td>
+</script>
+
+<script type="text/html" id="checkBox_active">
+      <td><input id="idactive" disabled data-bind="ojComponent: {component: 'ojSwitch',value:active},  "></td>
+</script>
+
+
+<div id="editDialog" title="Manage Member" data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide',
+                                                       resizeBehavior: 'resizable', dragAffordance: 'title-bar', modality: 'modal',rootAttributes:{style:'width:860px;height:400px;'}
+                                                        }">
+
+    <form class="oj-form oj-form-layout" data-bind="submit:saveAction">
+
+        <!-- Example of custom dialog header. Setting the class "oj-dialog-header" will tell the dialog to
+        use the contents of that <div> as the header content. Leaving this <div> out will cause the default header
+        to be used, which uses the title attribute as the header content value. -->
+        <div class="oj-dialog-header oj-helper-clearfix" aria-labelledby="dialog-title-id">
+            <div>
+                <span id="infoIcon" class="oj-message-status-icon member_icon" style="float:left; margin-right: 10px"></span>
+                <span id="dialog-title-id" class="oj-dialog-title">Manage Member</span>
+            </div>
+        </div>
+        <div class="oj-dialog-body">
+          <div class="oj-form oj-md-labels-inline oj-form-cols-labels-inline oj-form-cols-max2">
+               <div class="oj-flex">
+                 <div class="oj-flex-item">
+                   <label for="idFname">First Name</label>
+                 </div>
+                 <div class="oj-flex-item">
+                   <input id="idFname" data-bind="ojComponent: {component: 'ojInputText',value:fname, required: true}">
+                 </div>
+               </div>
+               <div class="oj-flex">
+                 <div class="oj-flex-item">
+                      <label for="idLname">Last Name</label>
+                 </div>
+                 <div class="oj-flex-item">
+                    <input id="idLname" data-bind="ojComponent: {component: 'ojInputText',value:lname, required:true}">
+                 </div>
+              </div>
+              <div class="oj-flex">
+                <div class="oj-flex-item">
+                     <label for="idphone">Phone</label>
+                </div>
+                <div class="oj-flex-item">
+                   <input id="idphone" data-bind="ojComponent: {component: 'ojInputText',value:phone}">
+                </div>
+             </div>
+             <div class="oj-flex">
+               <div class="oj-flex-item">
+                    <label for="idemail">Email</label>
+               </div>
+               <div class="oj-flex-item">
+                  <input id="idemail" data-bind="ojComponent: {component: 'ojInputText',value:email}">
+               </div>
+            </div>
+
+            <div class="oj-flex">
+              <div class="oj-flex-item">
+                   <label for="iddob">Birth Date</label>
+              </div>
+              <div class="oj-flex-item">
+                 <input id="iddob" data-bind="ojComponent: {component: 'ojInputDate',value:dob}">
+              </div>
+           </div>
+
+           <div class="oj-flex">
+             <div class="oj-flex-item">
+                  <label for="idchoir">Choir</label>
+             </div>
+             <div class="oj-flex-item">
+               <input id="idchoir" placeholder="Search..."  data-bind="ojComponent: {
+          component: 'ojInputSearch',value: choir, options:choirArray, optionsKeys:{value:'_id',label:'name'},  rootAttributes: {style:'max-width: 20em'}}">
+                <!--input id="idchoir" data-bind="ojComponent: {component: 'ojInputText',value:choir}"-->
+             </div>
+          </div>
+
+          <div class="oj-flex">
+            <div class="oj-flex-item">
+                 <label for="idtrait">Skill</label>
+            </div>
+            <div class="oj-flex-item">
+               <input id="idtrait" data-bind="ojComponent: {component: 'ojInputText',value:trait}">
+            </div>
+         </div>
+
+           <div class="oj-flex">
+             <div class="oj-flex-item">
+                  <label for="idadmin">Admin</label>
+             </div>
+             <div class="oj-flex-item">
+                <input id="idadmin" data-bind="ojComponent: {component: 'ojSwitch',value:admin}">
+             </div>
+          </div>
+
+          <div class="oj-flex">
+            <div class="oj-flex-item">
+                 <label for="idactive">Active</label>
+            </div>
+            <div class="oj-flex-item">
+               <input id="idactive" data-bind="ojComponent: {component: 'ojSwitch',value:active} ">
+            </div>
+         </div>
+
+
+
+
+
+
+
+          </div>
+        </div>
+        <div class="oj-dialog-footer">
+            <button id="submitBtn" type="submit" data-bind="ojComponent: {component:'ojButton', label: 'Save',display:'icons' ,icons:{start:'new-icon_12 save_icon'} } , enable:validPage()" ></button>
+            <button id="resetBtn" data-bind="ojComponent: {component: 'ojButton', label: 'Cancel', display:'icons' ,icons:{start:'new-icon_12 undo_icon'}}, click: function(){$('#editDialog').ojDialog('close');}"></button>
+        </div>
+
+    </form>
+</div>

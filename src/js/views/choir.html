@@ -1,0 +1,80 @@
+<!--
+ Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+  <h4> <strong> Choir Groups </strong></h4>
+  <div>
+     <table id="table" summary="Department List" aria-label="Departments Table"
+         data-bind="ojComponent: {component: 'ojTable',
+                                 data: datasource,
+                                 columnsDefault: {sortable: 'none'},
+                                 columns: [
+                                           {headerText: 'Name',field: 'name'},
+                                           {headerText: 'eMail',field: 'email'},
+                                           {headerText: 'Description',field: 'description'} ,
+                                           {headerTemplate: 'addhdr',template: 'edit_delete_column'}
+                                          ]}">
+     </table>
+  </div>
+</div>
+
+
+
+<script type="text/html" id="addhdr">
+   <th style="padding-left: 5px; padding-right: 5px;">
+     <button data-bind="ojComponent: {component: 'ojButton', label: 'Add',display:'icons' ,icons:{start:'create_new'}},
+                      click:$parent.addAction"></button>
+
+   </th>
+</script>
+<script type="text/html" id="edit_delete_column">
+    <td>
+      <button data-bind="ojComponent: {component: 'ojButton', label: 'Edit' ,display:'icons' ,icons:{start:'new-icon_12 edit_new'}},
+                       click:$parent.editAction"></button>
+       <button data-bind="ojComponent: {component: 'ojButton', label: 'Delete',display:'icons' ,icons:{start:'new-icon_12 delete_new'}},
+                                        click:$parent.deleteAction">
+       </button>
+
+    </td>
+</script>
+
+
+
+<div id="editDialog" title="Manage Group" data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide',
+                                                       resizeBehavior: 'resizable', dragAffordance: 'title-bar', modality: 'modal'
+                                                        }">
+    <form class="oj-form" data-bind="submit:saveAction">
+
+        <!-- Example of custom dialog header. Setting the class "oj-dialog-header" will tell the dialog to
+        use the contents of that <div> as the header content. Leaving this <div> out will cause the default header
+        to be used, which uses the title attribute as the header content value. -->
+        <div class="oj-dialog-header oj-helper-clearfix" aria-labelledby="dialog-title-id">
+            <div>
+                <span id="infoIcon" class="oj-message-status-icon choir_icon" style="float:left; margin-right: 10px"></span>
+                <span id="dialog-title-id" class="oj-dialog-title">Manage Choir Group</span>
+            </div>
+        </div>
+        <div class="oj-dialog-body">
+            <div class="oj-md-odd-cols-4">
+                <label for="newName" class="oj-label">Group Name</label>
+                <input id="newName" type="text" data-bind="ojComponent: {component:'ojInputText', value:name}" required="true">
+            </div>
+            <div class="oj-md-odd-cols-4">
+                <label for="newmail" class="oj-label">Group Email</label>
+                <input id="newmail" type="text" data-bind="ojComponent: {component:'ojInputText', value:email}">
+            </div>
+            <div class="oj-md-odd-cols-4">
+                <label for="newdesc" class="oj-label">Description</label>
+                <!--input id="newdesc" type="text" data-bind="ojComponent: {component:'ojInputText', value:description}"-->
+
+                <textarea id="newdesc" rows="3" data-bind="ojComponent: {component:'ojTextArea', value:description}"/>
+            </div>
+
+        </div>
+        <div class="oj-dialog-footer">
+            <button id="submitBtn" type="submit" data-bind="ojComponent: {component:'ojButton', label: 'Save',display:'icons' ,icons:{start:'new-icon_12 save_icon'} }"></button>
+            <button id="resetBtn" data-bind="ojComponent: {component: 'ojButton', label: 'Cancel', display:'icons' ,icons:{start:'new-icon_12 undo_icon'}}, click: function(){$('#editDialog').ojDialog('close');}"></button>
+        </div>
+    </form>
+</div>
